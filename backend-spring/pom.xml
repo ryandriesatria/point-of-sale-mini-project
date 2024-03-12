@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.prodemy</groupId>
-	<artifactId>prodemy_pos</artifactId>
+	<artifactId>backend-spring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>prodemy_pos</name>
+	<name>backend-spring</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>21</java.version>

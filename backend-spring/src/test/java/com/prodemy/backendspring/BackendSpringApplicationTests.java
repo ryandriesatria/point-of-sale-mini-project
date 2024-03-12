@@ -1,10 +1,10 @@
-package com.prodemy.prodemy_pos;
+package com.prodemy.backendspring;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ProdemyPosApplicationTests {
+class BackendSpringApplicationTests {
 
 	@Test
 	void contextLoads() {
