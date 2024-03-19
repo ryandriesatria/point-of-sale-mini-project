@@ -63,10 +63,6 @@ public class ProductController {
 
         Product data = productService.getProductById(id);
 
-        if (data == null) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Product Not Found");
-        }
         resp.setStatus(200);
         resp.setMessage("OK");
         resp.setData(data);

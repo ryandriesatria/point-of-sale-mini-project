@@ -10,9 +10,9 @@ import {
     useNavigate,
     useSearchParams,
 } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-import toRupiah from "../util/formatter";
+import { toRupiah } from "../util/formatter";
 
 function OrderPage() {
     const navigate = useNavigate();
@@ -105,15 +105,19 @@ function OrderPage() {
         setActiveTab(-1);
     }
 
+    function handleNavigatePayment() {
+        if (dataOrder.length > 0) {
+            navigate("/payment");
+        }
+    }
+
     return (
-        <Layout>
+        <Layout activePage={1}>
             <div className='bg-white m-5 ml-20 p-10 rounded-2xl h-[94.5vh]'>
                 <div className='flex gap-2 divide-x-2 divide-zinc-500 h-full'>
                     <div className='order-section w-2/3 mr-6'>
                         <div className='flex justify-between items-center'>
-                            <span className='font-franklin text-2xl'>
-                                Daftar Produk
-                            </span>
+                            <span className='font-franklin text-2xl'>Menu</span>
                             <div className='flex gap-4'>
                                 <select
                                     value={sortOption}
@@ -259,7 +263,7 @@ function OrderPage() {
                         <span className='font-franklin text-2xl'>
                             Daftar Pesanan
                         </span>
-                        <div className='order-list mt-14 overflow-auto pr-2 flex flex-col'>
+                        <div className='order-list mt-14 overflow-auto pr-2 flex flex-col scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-slate-700 scrollbar-track-slate-300'>
                             {dataOrder.length > 0 ? (
                                 dataOrder.map((item) => (
                                     <React.Fragment key={item.product_id}>
@@ -297,6 +301,7 @@ function OrderPage() {
                                 </span>
                             </div>
                             <button
+                                onClick={handleNavigatePayment}
                                 type='button'
                                 className={`w-full ${
                                     total_amount !== 0

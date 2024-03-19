@@ -1,4 +1,4 @@
-import toRupiah from "../util/formatter";
+import { toRupiah } from "../util/formatter";
 import {
     removeItemFromOrder,
     setItemQuantity,

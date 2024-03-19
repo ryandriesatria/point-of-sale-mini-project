@@ -1,4 +1,4 @@
-import toRupiah from "../util/formatter";
+import { toRupiah } from "../util/formatter";
 import { useDispatch } from "react-redux";
 import { addItemToOrder } from "../store/reducers/orderSlice";
 
@@ -11,6 +11,7 @@ function ProductCard({ data }) {
             title: data.title,
             quantity: 1,
             price: data.price,
+            image: data.image,
         };
         dispatch(addItemToOrder(payload));
     }

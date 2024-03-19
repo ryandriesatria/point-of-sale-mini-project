@@ -10,7 +10,8 @@ const orderSlice = createSlice({
     initialState,
     reducers: {
         addItemToOrder: (state, action) => {
-            const { product_id, title, quantity, price } = action.payload;
+            const { product_id, title, quantity, price, image } =
+                action.payload;
 
             const product = state.dataOrder?.find(
                 (item) => item.product_id === product_id
@@ -33,6 +34,7 @@ const orderSlice = createSlice({
                         title,
                         quantity,
                         price,
+                        image,
                     },
                 ];
             }
@@ -70,10 +72,18 @@ const orderSlice = createSlice({
                 }
             }
         },
+        clearOrder: (state, action) => {
+            state.dataOrder = [];
+            state.total_amount = 0;
+        },
     },
 });
 
-export const { addItemToOrder, removeItemFromOrder, setItemQuantity } =
-    orderSlice.actions;
+export const {
+    addItemToOrder,
+    removeItemFromOrder,
+    setItemQuantity,
+    clearOrder,
+} = orderSlice.actions;
 
 export default orderSlice.reducer;

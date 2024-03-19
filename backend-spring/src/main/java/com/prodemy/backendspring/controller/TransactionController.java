@@ -58,10 +58,6 @@ public class TransactionController {
 
         List<TransactionDetail> data = transactionDetailService.getTransactionDetailById(id);
 
-        if (data.isEmpty()) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Product Not Found");
-        }
         resp.setMessage("OK");
         resp.setStatus(200);
         resp.setData(data);
