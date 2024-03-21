@@ -1,6 +1,7 @@
 package com.prodemy.backendspring.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,6 +57,17 @@ public class TransactionServiceImpl implements TransactionService {
     public List<Transaction> getAllTransaction() {
 
         return transactionRepository.findAll();
+    }
+
+    @Override
+    public Transaction getTransactionById(Integer id) {
+        Optional<Transaction> op = transactionRepository.findById(id);
+
+        if (!op.isPresent()) {
+            return null;
+        }
+        return op.get();
+
     }
 
 }

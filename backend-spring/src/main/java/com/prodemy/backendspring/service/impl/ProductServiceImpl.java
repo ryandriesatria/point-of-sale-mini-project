@@ -5,14 +5,18 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.prodemy.backendspring.model.Category;
 import com.prodemy.backendspring.model.Product;
+import com.prodemy.backendspring.model.TransactionDetail;
 import com.prodemy.backendspring.model.request.ProductRequest;
 import com.prodemy.backendspring.repository.CategoryRepository;
 import com.prodemy.backendspring.repository.ProductRepository;
+import com.prodemy.backendspring.repository.TransactionDetailRepository;
 import com.prodemy.backendspring.service.ProductService;
 
 import jakarta.transaction.Transactional;
@@ -26,6 +30,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private TransactionDetailRepository transactionDetailRepository;
 
     @Override
     public void addProduct(ProductRequest productRequest) {
@@ -89,6 +96,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(Integer id) {
+        Optional<Product> product = productRepository.findById(id);
+
+        if (!product.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product can't be found!");
+        }
+
+        List<TransactionDetail> transactionDetail = transactionDetailRepository.findByProduct(product.get());
+
+        if (transactionDetail.size() != 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Product already registered in Transaction History!");
+        }
         productRepository.deleteById(id);
     }
 

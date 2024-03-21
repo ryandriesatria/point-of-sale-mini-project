@@ -10,4 +10,6 @@ public interface TransactionService {
 
     public List<Transaction> getAllTransaction();
 
+    public Transaction getTransactionById(Integer id);
+
 }

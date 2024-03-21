@@ -3,6 +3,7 @@ package com.prodemy.backendspring.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +12,7 @@ import com.prodemy.backendspring.model.Category;
 import com.prodemy.backendspring.model.response.HttpResponseModel;
 import com.prodemy.backendspring.service.CategoryService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
