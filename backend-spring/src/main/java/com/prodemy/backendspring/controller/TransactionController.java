@@ -1,6 +1,9 @@
 package com.prodemy.backendspring.controller;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -45,12 +49,14 @@ public class TransactionController {
     }
 
     @GetMapping
-    public HttpResponseModel<List<Transaction>> getAllTransaction() {
+    public HttpResponseModel<List<Transaction>> getAllTransaction(@RequestParam Optional<String> start_date,
+            @RequestParam Optional<String> end_date) throws ParseException {
         HttpResponseModel<List<Transaction>> resp = new HttpResponseModel<>();
 
         resp.setStatus(200);
         resp.setMessage("OK");
-        resp.setData(transactionService.getAllTransaction());
+
+        resp.setData(transactionService.getAllTransaction(start_date, end_date));
         return resp;
     }
 

@@ -34,13 +34,13 @@ public class Transaction {
 
     @Column(name = "transaction_date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date transaction_date;
+    private Date transactionDate;
 
     @Column(name = "total_amount")
-    private Integer total_amount;
+    private Integer totalAmount;
 
     @Column(name = "total_pay")
-    private Integer total_pay;
+    private Integer totalPay;
 
     @JsonIgnore
     @OneToMany(mappedBy = "transaction")

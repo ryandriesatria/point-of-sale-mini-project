@@ -15,15 +15,15 @@ import { toRupiah } from "../util/formatter";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
-function ProductListPage() {
+function CategoryListPage() {
     const fetcher = (url) => axios.get(url).then((res) => res.data.data);
 
     const {
-        data: products,
+        data: categories,
         isLoading,
         error,
         mutate,
-    } = useSWR(`http://localhost:8080/product`, fetcher);
+    } = useSWR(`http://localhost:8080/category/product_count`, fetcher);
 
     const [sorting, setSorting] = useState([]);
     const [globalFilter, setGlobalFilter] = useState("");
@@ -33,33 +33,28 @@ function ProductListPage() {
         columnHelper.accessor((row) => row.id, {
             id: "id",
             cell: (info) => info.getValue(),
-            header: () => <span>ID Produk</span>,
+            header: () => <span>ID Kategori</span>,
         }),
-        columnHelper.accessor((row) => row.title, {
-            id: "title",
+        columnHelper.accessor((row) => row.name, {
+            id: "name",
             cell: (info) => info.getValue(),
-            header: () => <span>Nama Produk</span>,
+            header: () => <span>Nama Kategori</span>,
         }),
-        columnHelper.accessor((row) => row.price, {
-            id: "total_amount",
-            cell: (info) => toRupiah(info.getValue()),
-            header: () => <span>Harga Satuan</span>,
-        }),
-        columnHelper.accessor((row) => row.category.name, {
-            id: "category_name",
+        columnHelper.accessor((row) => row.product_count, {
+            id: "product_count",
             cell: (info) => info.getValue(),
-            header: () => <span>Kategori</span>,
+            header: () => <span>Jumlah Produk Terkait</span>,
         }),
         columnHelper.accessor((row) => row.id, {
             id: "action",
             cell: (info) => (
                 <div className='flex gap-2 justify-between'>
-                    <Link to={`/product/${info.getValue()}`}>
+                    <Link to={`/category/${info.getValue()}`}>
                         <button className='btn-default text-xs m-0 py-2'>
                             Detail
                         </button>
                     </Link>
-                    <Link to={`/product/${info.getValue()}/edit`}>
+                    <Link to={`/category/${info.getValue()}/edit`}>
                         <button className='btn-warning text-xs m-0 py-2 text-black'>
                             Edit
                         </button>
@@ -78,7 +73,7 @@ function ProductListPage() {
     ];
 
     const table = useReactTable({
-        data: isLoading ? [] : products,
+        data: isLoading ? [] : categories,
         columns,
 
         state: {
@@ -110,11 +105,11 @@ function ProductListPage() {
         }).then((result) => {
             if (result.isConfirmed) {
                 axios
-                    .delete(`http://localhost:8080/product/${id}`)
+                    .delete(`http://localhost:8080/category/${id}`)
                     .then(() => {
                         Swal.fire({
                             title: "Deleted!",
-                            text: "Product has been deleted.",
+                            text: "Category has been deleted.",
                             icon: "success",
                         });
                         mutate();
@@ -125,18 +120,18 @@ function ProductListPage() {
                             title: "Oops...",
                             html:
                                 "Terjadi kesalahan!<br>" +
-                                "Produk telah tercatat di riwayat transaksi",
+                                "Kategori memiliki produk terkait yang telah tercatat di database.",
                         });
                     });
             }
         });
     }
     return (
-        <Layout activePage={3}>
+        <Layout activePage={4}>
             <div className='bg-white m-5 ml-20 p-10 rounded-2xl h-[94.5vh]'>
                 <div className='flex justify-between items-center'>
                     <span className='font-franklin text-2xl'>
-                        Daftar Produk
+                        Daftar Kategori
                     </span>
                     <div className='flex items-center gap-4'>
                         <input
@@ -147,9 +142,9 @@ function ProductListPage() {
                             placeholder='Search ...'
                         />
                         <div className='border-black border-l-[1px] h-8'></div>
-                        <Link to={"/product/add"}>
+                        <Link to={"/category/add"}>
                             <button className='btn-default text-xs m-0'>
-                                Tambah Produk
+                                Tambah Kategori
                             </button>
                         </Link>
                     </div>
@@ -278,4 +273,4 @@ function ProductListPage() {
     );
 }
 
-export default ProductListPage;
+export default CategoryListPage;

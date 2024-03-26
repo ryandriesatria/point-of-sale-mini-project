@@ -1,6 +1,5 @@
-package com.prodemy.backendspring.model.request;
+package com.prodemy.backendspring.model.response;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CategoryRequest {
-    @NotBlank(message = "Name is Mandatory")
+public class CategoryResponse {
+    private Integer id;
     private String name;
+    private Long product_count;
 }

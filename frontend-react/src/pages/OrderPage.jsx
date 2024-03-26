@@ -47,6 +47,11 @@ function OrderPage() {
         ([url, params]) => fetcher(url, params)
     );
 
+    const { data: categories, isLoadingCategories } = useSWR(
+        `http://localhost:8080/category`,
+        fetcher
+    );
+
     function handleActiveTab(val) {
         setActiveTab(val);
         setSortOption("default");
@@ -206,43 +211,25 @@ function OrderPage() {
                                         Semua
                                     </span>
                                 </li>
-                                <li className='me-2 hover:cursor-pointer'>
-                                    <span
-                                        onClick={() => handleActiveTab(1)}
-                                        className={
-                                            activeTab === 1
-                                                ? "active-tab"
-                                                : "default-tab"
-                                        }
+                                {categories?.map((category) => (
+                                    <li
+                                        key={category.id}
+                                        className='me-2 hover:cursor-pointer'
                                     >
-                                        Makanan
-                                    </span>
-                                </li>
-
-                                <li className='me-2 hover:cursor-pointer'>
-                                    <span
-                                        onClick={() => handleActiveTab(2)}
-                                        className={
-                                            activeTab === 2
-                                                ? "active-tab"
-                                                : "default-tab"
-                                        }
-                                    >
-                                        Minuman
-                                    </span>
-                                </li>
-                                <li className='me-2 hover:cursor-pointer'>
-                                    <span
-                                        onClick={() => handleActiveTab(3)}
-                                        className={
-                                            activeTab === 3
-                                                ? "active-tab"
-                                                : "default-tab"
-                                        }
-                                    >
-                                        Snack
-                                    </span>
-                                </li>
+                                        <span
+                                            onClick={() =>
+                                                handleActiveTab(category.id)
+                                            }
+                                            className={
+                                                activeTab === category.id
+                                                    ? "active-tab"
+                                                    : "default-tab"
+                                            }
+                                        >
+                                            {category.name}
+                                        </span>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
 

@@ -136,37 +136,39 @@ const Sidebar = ({ activePage }) => {
                         </li>
                     </Link>
                     <hr className='my-4 -mx-5' />
-                    <li
-                        className='flex items-center justify-between gap-4 hover:bg-slate-500 hover:cursor-pointer rounded-lg'
+                    <Link
+                        to={"/category"}
                         onClick={() => handleSidebarClick(4)}
                     >
-                        <div className='text-white block py-2 pl-2'>
-                            Categories
-                        </div>
-                        <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            fill='none'
-                            viewBox='0 0 24 24'
-                            strokeWidth={1.5}
-                            stroke='currentColor'
-                            className={`w-8 h-8 ${
-                                isActive === 4
-                                    ? "stroke-sky-200"
-                                    : "stroke-white"
-                            }`}
-                        >
-                            <path
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                d='M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z'
-                            />
-                            <path
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                d='M6 6h.008v.008H6V6Z'
-                            />
-                        </svg>
-                    </li>
+                        <li className='flex items-center justify-between gap-4 hover:bg-slate-500 hover:cursor-pointer rounded-lg'>
+                            <div className='text-white block py-2 pl-2'>
+                                Categories
+                            </div>
+                            <svg
+                                xmlns='http://www.w3.org/2000/svg'
+                                fill='none'
+                                viewBox='0 0 24 24'
+                                strokeWidth={1.5}
+                                stroke='currentColor'
+                                className={`w-8 h-8 ${
+                                    isActive === 4
+                                        ? "stroke-sky-200"
+                                        : "stroke-white"
+                                }`}
+                            >
+                                <path
+                                    strokeLinecap='round'
+                                    strokeLinejoin='round'
+                                    d='M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z'
+                                />
+                                <path
+                                    strokeLinecap='round'
+                                    strokeLinejoin='round'
+                                    d='M6 6h.008v.008H6V6Z'
+                                />
+                            </svg>
+                        </li>
+                    </Link>
                 </ul>
             </nav>
         </div>

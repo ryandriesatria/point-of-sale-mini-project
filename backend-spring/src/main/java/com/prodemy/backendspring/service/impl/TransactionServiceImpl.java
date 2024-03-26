@@ -1,7 +1,12 @@
 package com.prodemy.backendspring.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,9 +41,9 @@ public class TransactionServiceImpl implements TransactionService {
         // ->TransactionDetail.builder().);
 
         Transaction entity = Transaction.builder()
-                .transaction_date(transactionRequest.getTransaction_date())
-                .total_amount(transactionRequest.getTotal_amount())
-                .total_pay(transactionRequest.getTotal_pay())
+                .transactionDate(transactionRequest.getTransaction_date())
+                .totalAmount(transactionRequest.getTotal_amount())
+                .totalPay(transactionRequest.getTotal_pay())
                 .build();
 
         Integer id = transactionRepository.save(entity).getId();
@@ -54,7 +59,22 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<Transaction> getAllTransaction() {
+    public List<Transaction> getAllTransaction(Optional<String> start_date, Optional<String> end_date)
+            throws ParseException {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Date start = start_date.isPresent() ? formatter.parse(start_date.get() + " 00:00:00") : null;
+        Date end = end_date.isPresent() ? formatter.parse(end_date.get() + " 23:59:59") : null;
+        System.out.println(end);
+        if (start_date.isPresent() && end_date.isPresent()) {
+            return transactionRepository.findByTransactionDateGreaterThanEqualAndTransactionDateLessThanEqual(start,
+                    end);
+        } else if (start_date.isPresent()) {
+            return transactionRepository.findByTransactionDateGreaterThanEqual(start);
+        } else if (end_date.isPresent()) {
+            return transactionRepository.findByTransactionDateLessThanEqual(end);
+        }
 
         return transactionRepository.findAll();
     }
