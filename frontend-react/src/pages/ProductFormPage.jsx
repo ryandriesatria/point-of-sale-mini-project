@@ -36,7 +36,7 @@ function ProductFormPage() {
     );
 
     const schema = yup.object().shape({
-        title: yup.string().required("This field is required!"),
+        title: yup.string().max(50).required("This field is required!"),
         category: yup.string().required("This field is required!"),
         image: yup
             .string()

@@ -29,7 +29,7 @@ function CategoryFormPage() {
     );
 
     const schema = yup.object().shape({
-        name: yup.string().required("This field is required!"),
+        name: yup.string().max(15).required("This field is required!"),
     });
 
     const {

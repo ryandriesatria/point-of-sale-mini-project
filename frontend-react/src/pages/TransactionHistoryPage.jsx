@@ -135,6 +135,7 @@ function TransactionHistoryPage() {
                     >
                         <span>Filter by date :</span>
                         <input
+                            max={endDate}
                             value={startDate}
                             onChange={(e) => setStartDate(e.target.value)}
                             type='date'
@@ -142,6 +143,7 @@ function TransactionHistoryPage() {
                         />
                         <span>-</span>
                         <input
+                            min={startDate}
                             value={endDate}
                             onChange={(e) => setEndDate(e.target.value)}
                             type='date'
