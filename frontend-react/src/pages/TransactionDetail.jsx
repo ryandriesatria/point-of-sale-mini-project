@@ -12,6 +12,7 @@ import {
     getSortedRowModel,
 } from "@tanstack/react-table";
 import { useState } from "react";
+import Table from "../components/Table";
 
 function TransactionDetailPage() {
     const { id } = useParams();
@@ -90,63 +91,17 @@ function TransactionDetailPage() {
                         <span>
                             :{" "}
                             {new Date(
-                                transaction.transaction_date
+                                transaction.transactionDate
                             ).toLocaleString()}
                         </span>
                         <span>Total Harga</span>
-                        <span>: {toRupiah(transaction.total_amount)}</span>
+                        <span>: {toRupiah(transaction.totalAmount)}</span>
                         <span>Total Bayar</span>
-                        <span>: {toRupiah(transaction.total_pay)}</span>
+                        <span>: {toRupiah(transaction.totalPay)}</span>
                     </div>
                 )}
-                <div className='h-[60%] overflow-y-auto'>
-                    <table className=' border w-full font-poppins table-fixed text-sm mt-10'>
-                        <thead className='text-left'>
-                            {table.getHeaderGroups().map((headerGroup) => (
-                                <tr key={headerGroup.id}>
-                                    {headerGroup.headers.map((header) => (
-                                        <th
-                                            className='py-4 px-5 bg-gray-700 text-gray-100 hover:cursor-pointer hover:bg-gray-800 select-none'
-                                            key={header.id}
-                                            {...(header.column.getCanSort()
-                                                ? {
-                                                      onClick:
-                                                          header.column.getToggleSortingHandler(),
-                                                  }
-                                                : {})}
-                                        >
-                                            {flexRender(
-                                                header.column.columnDef.header,
-                                                header.getContext()
-                                            )}
-
-                                            {header.column.getIsSorted() ===
-                                            "asc" ? (
-                                                <span> 🔼</span>
-                                            ) : header.column.getIsSorted() ===
-                                              "desc" ? (
-                                                <span> 🔽</span>
-                                            ) : null}
-                                        </th>
-                                    ))}
-                                </tr>
-                            ))}
-                        </thead>
-                        <tbody>
-                            {table.getRowModel().rows.map((row) => (
-                                <tr key={row.id} className='border-b '>
-                                    {row.getVisibleCells().map((cell) => (
-                                        <td key={cell.id} className='py-4 px-5'>
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext()
-                                            )}
-                                        </td>
-                                    ))}
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                <div className='h-[60%] overflow-y-auto mt-10'>
+                    <Table table={table} />
                 </div>
             </div>
         </Layout>

@@ -18,6 +18,8 @@ import {
     useNavigate,
     useSearchParams,
 } from "react-router-dom";
+import Table from "../components/Table";
+import Pagination from "../components/Pagination";
 
 function TransactionHistoryPage() {
     const [startDate, setStartDate] = useState("");
@@ -44,7 +46,6 @@ function TransactionHistoryPage() {
         ([url, params]) => fetcher(url, params)
     );
 
-    console.log(transactions);
     const [sorting, setSorting] = useState([
         {
             id: "transactionDate",
@@ -158,121 +159,9 @@ function TransactionHistoryPage() {
                     </form>
                 </div>
                 <div className='flex flex-col mt-6 h-[95%] justify-between'>
-                    <table className=' border w-full font-poppins table-fixed text-sm '>
-                        <thead className='text-left'>
-                            {table.getHeaderGroups().map((headerGroup) => (
-                                <tr key={headerGroup.id}>
-                                    {headerGroup.headers.map((header) => (
-                                        <th
-                                            className='py-4 px-5 bg-gray-700 text-gray-100 hover:cursor-pointer hover:bg-gray-800 select-none'
-                                            key={header.id}
-                                            {...(header.column.getCanSort()
-                                                ? {
-                                                      onClick:
-                                                          header.column.getToggleSortingHandler(),
-                                                  }
-                                                : {})}
-                                        >
-                                            {flexRender(
-                                                header.column.columnDef.header,
-                                                header.getContext()
-                                            )}
-
-                                            {header.column.getIsSorted() ===
-                                            "asc" ? (
-                                                <span> 🔼</span>
-                                            ) : header.column.getIsSorted() ===
-                                              "desc" ? (
-                                                <span> 🔽</span>
-                                            ) : null}
-                                        </th>
-                                    ))}
-                                </tr>
-                            ))}
-                        </thead>
-                        <tbody>
-                            {table.getRowModel().rows.map((row) => (
-                                <tr key={row.id} className='border-b '>
-                                    {row.getVisibleCells().map((cell) => (
-                                        <td key={cell.id} className='py-4 px-5'>
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext()
-                                            )}
-                                        </td>
-                                    ))}
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <Table table={table} />
                     <div className='flex mt-2 items-center gap-2 text-xs justify-end'>
-                        <div className='flex gap-2'>
-                            <button
-                                className={`${
-                                    !table.getCanPreviousPage()
-                                        ? "bg-gray-100"
-                                        : "hover:bg-gray-200 hover:curstor-pointer bg-gray-100"
-                                } rounded p-1`}
-                                onClick={() => table.setPageIndex(0)}
-                                disabled={!table.getCanPreviousPage()}
-                            >
-                                <span className='w-5 h-5'>{"<<"}</span>
-                            </button>
-                            <button
-                                className={`${
-                                    !table.getCanPreviousPage()
-                                        ? "bg-gray-100"
-                                        : "hover:bg-gray-200 hover:curstor-pointer bg-gray-100"
-                                } rounded p-1`}
-                                onClick={() => table.previousPage()}
-                                disabled={!table.getCanPreviousPage()}
-                            >
-                                <span className='w-5 h-5'>{"<"}</span>
-                            </button>
-                            <span className='flex items-center gap-1'>
-                                <input
-                                    min={1}
-                                    max={table.getPageCount()}
-                                    type='number'
-                                    value={
-                                        table.getState().pagination.pageIndex +
-                                        1
-                                    }
-                                    onChange={(e) => {
-                                        const page = e.target.value
-                                            ? Number(e.target.value) - 1
-                                            : 0;
-                                        table.setPageIndex(page);
-                                    }}
-                                    className='border p-1 rounded w-10'
-                                />
-                                of {table.getPageCount()}
-                            </span>
-                            <button
-                                className={`${
-                                    !table.getCanNextPage()
-                                        ? "bg-gray-100"
-                                        : "hover:bg-gray-200 hover:curstor-pointer bg-gray-100"
-                                } rounded p-1`}
-                                onClick={() => table.nextPage()}
-                                disabled={!table.getCanNextPage()}
-                            >
-                                <span className='w-5 h-5'>{">"}</span>
-                            </button>
-                            <button
-                                className={`${
-                                    !table.getCanNextPage()
-                                        ? "bg-gray-100"
-                                        : "hover:bg-gray-200 hover:curstor-pointer bg-gray-100"
-                                } rounded p-1`}
-                                onClick={() =>
-                                    table.setPageIndex(table.getPageCount() - 1)
-                                }
-                                disabled={!table.getCanNextPage()}
-                            >
-                                <span className='w-5 h-5'>{">>"}</span>
-                            </button>
-                        </div>
+                        <Pagination table={table} />
                     </div>
                 </div>
             </div>
